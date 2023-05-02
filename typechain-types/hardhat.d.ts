@@ -45,6 +45,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.UUPSUpgradeable__factory>;
     getContractFactory(
+      name: "PausableUpgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PausableUpgradeable__factory>;
+    getContractFactory(
       name: "IERC1155ReceiverUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC1155ReceiverUpgradeable__factory>;
@@ -60,6 +64,22 @@ declare module "hardhat/types/runtime" {
       name: "ERC1155ReceiverUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC1155ReceiverUpgradeable__factory>;
+    getContractFactory(
+      name: "ERC721Upgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721Upgradeable__factory>;
+    getContractFactory(
+      name: "ERC721BurnableUpgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721BurnableUpgradeable__factory>;
+    getContractFactory(
+      name: "ERC721URIStorageUpgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721URIStorageUpgradeable__factory>;
+    getContractFactory(
+      name: "IERC721MetadataUpgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721MetadataUpgradeable__factory>;
     getContractFactory(
       name: "IERC721ReceiverUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -84,6 +104,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC165Upgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165Upgradeable__factory>;
+    getContractFactory(
+      name: "FishNFT",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FishNFT__factory>;
     getContractFactory(
       name: "Pvp",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -130,6 +154,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.UUPSUpgradeable>;
     getContractAt(
+      name: "PausableUpgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PausableUpgradeable>;
+    getContractAt(
       name: "IERC1155ReceiverUpgradeable",
       address: string,
       signer?: ethers.Signer
@@ -149,6 +178,26 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC1155ReceiverUpgradeable>;
+    getContractAt(
+      name: "ERC721Upgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721Upgradeable>;
+    getContractAt(
+      name: "ERC721BurnableUpgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721BurnableUpgradeable>;
+    getContractAt(
+      name: "ERC721URIStorageUpgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721URIStorageUpgradeable>;
+    getContractAt(
+      name: "IERC721MetadataUpgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721MetadataUpgradeable>;
     getContractAt(
       name: "IERC721ReceiverUpgradeable",
       address: string,
@@ -179,6 +228,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165Upgradeable>;
+    getContractAt(
+      name: "FishNFT",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FishNFT>;
     getContractAt(
       name: "Pvp",
       address: string,
