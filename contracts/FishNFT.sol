@@ -20,7 +20,8 @@ contract FishNFT is
     UUPSUpgradeable,
     AccessControlUpgradeable,
     PausableUpgradeable,
-    ReentrancyGuardUpgradeable
+    ReentrancyGuardUpgradeable,
+    VRFConsumerBaseV2
 {
     using StringsUpgradeable for uint256;
     using CountersUpgradeable for CountersUpgradeable.Counter;
@@ -36,7 +37,7 @@ contract FishNFT is
         Dolphine, //
         Flounder //
     }
-    struct FistInfo {
+    struct FishInfo {
         uint weight;
         FishTypes typeFish;
     }
@@ -52,11 +53,12 @@ contract FishNFT is
     string public baseURI;
 
     mapping(uint => address) public requestIdToSender;
-    mapping(uint => FishTypes) public fishByIds;
+    mapping(uint => FishInfo) public fishByIds;
     mapping(uint256 => string) private _tokenURIs;
     mapping(uint => uint256) public requestIdToTokenId;
 
     event Fished(FishTypes fishType, uint256 _tokenId, address _to);
+    event throwBait(uint requestID);
 
     function initialize(
         string calldata name_,
@@ -76,6 +78,7 @@ contract FishNFT is
         __ReentrancyGuard_init();
         __UUPSUpgradeable_init();
         __Pausable_init();
+        VRFConsumerBaseV2(_VRFCoordinator);
         COORDINATOR = VRFCoordinatorV2Interface(_VRFCoordinator);
         baseURI = _baseURII;
     }
@@ -96,22 +99,7 @@ contract FishNFT is
         baseURI = newBaseURI;
     }
 
-    // function mint(
-    //     address to,
-    //     uint256 id
-    // ) public onlyRole(DEFAULT_ADMIN_ROLE) returns (uint) {
-    //     _globalCounter.increment();
-    //     uint256 newItemId = _globalCounter.current();
-    //     string memory link = string(
-    //         bytes.concat(bytes(baseURI), bytes(StringsUpgradeable.toString(id)))
-    //     );
-    //     _mint(to, _globalCounter.current());
-    //     _tokenURIs[_globalCounter.current()] = link;
-    //     emit Minted(id, newItemId, to, address(0), 0);
-    //     return _globalCounter.current();
-    // }
-
-    function createCollectible() public returns (uint) {
+    function throwABait() public returns (uint) {
         uint requestId = COORDINATOR.requestRandomWords(
             keyHash,
             s_subscriptionId,
@@ -120,7 +108,7 @@ contract FishNFT is
             numWords
         );
         requestIdToSender[requestId] = msg.sender;
-        emit RequestedCollectible(requestId);
+        emit throwBait(requestId);
         return requestId;
     }
 
@@ -130,50 +118,45 @@ contract FishNFT is
     ) internal override {
         _globalCounter.increment();
         uint256 newItemId = _globalCounter.current();
-        tokenID = newItemId;
-        FistInfo storage fish = fishByIds[tokenID];
-        // address dogOwner = requestIdToSender[requestId];
-        // uint256 newItemId = tokenCounter;
-        // _safeMint(dogOwner, newItemId);
-        // Breed breed = Breed(_randomWords[0] % 3);
-        // tokenIdToBreed[newItemId] = breed;
-        // requestIdToTokenId[requestId] = newItemId;
-        // tokenCounter = tokenCounter + 1;
-        if (_randomWords[0] % 9) {
-            fish.typeFish = FishTypes.Shark;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 8) {
-            fish.typeFish = FishTypes.Dolphine;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 7) {
-            fish.typeFish = FishTypes.Eel;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 6) {
-            fish.typeFish = FishTypes.Skate;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 5) {
-            fish.typeFish = FishTypes.Perch;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 4) {
-            fish.typeFish = FishTypes.Piranha;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 3) {
-            fish.typeFish = FishTypes.Anabas;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 2) {
-            fish.typeFish = FishTypes.Flounder;
-            fish.weight = _randomWords[1];
-        } else if (_randomWords[0] % 1) {
-            fish.typeFish = FishTypes.Anabas;
-            fish.weight = _randomWords[1];
+        address receiver = requestIdToSender[requestId];
+        FishInfo storage fishy = fishByIds[newItemId];
+        if (_randomWords[0] % 9 == 0) {
+            fishy.typeFish = FishTypes.Shark;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 8 == 0) {
+            fishy.typeFish = FishTypes.Dolphine;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 7 == 0) {
+            fishy.typeFish = FishTypes.Eel;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 6 == 0) {
+            fishy.typeFish = FishTypes.Skate;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 5 == 0) {
+            fishy.typeFish = FishTypes.Perch;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 4 == 0) {
+            fishy.typeFish = FishTypes.Piranha;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 3 == 0) {
+            fishy.typeFish = FishTypes.Anabas;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 2 == 0) {
+            fishy.typeFish = FishTypes.Flounder;
+            fishy.weight = _randomWords[1];
+        } else if (_randomWords[0] % 1 == 0) {
+            fishy.typeFish = FishTypes.Anabas;
+            fishy.weight = _randomWords[1];
         }
         string memory link = string(
             bytes.concat(
                 bytes(baseURI),
-                bytes(StringsUpgradeable.toString(currentFishType))
+                bytes(StringsUpgradeable.toString(uint(fishy.typeFish)))
             )
         );
-        emit Fished(currentFishType, requestId, _randomWords);
+        _safeMint(receiver, newItemId);
+        _tokenURIs[_globalCounter.current()] = link;
+        emit Fished(fishy.typeFish, requestId, receiver);
     }
 
     function setPause(
