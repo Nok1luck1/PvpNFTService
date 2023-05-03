@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -30,25 +29,26 @@ import type {
 
 export interface FishNFTInterface extends utils.Interface {
   functions: {
+    "COORDINATOR()": FunctionFragment;
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "_globalCounter()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
-    "changeSigner(address)": FunctionFragment;
+    "fishByIds(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
-    "initialize(string,string,string)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "paused()": FunctionFragment;
-    "proxiableUUID()": FunctionFragment;
+    "rawFulfillRandomWords(uint256,uint256[])": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
+    "requestIdToSender(uint256)": FunctionFragment;
+    "requestIdToTokenId(uint256)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
@@ -57,33 +57,34 @@ export interface FishNFTInterface extends utils.Interface {
     "setPause(bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
+    "throwABait()": FunctionFragment;
+    "tokenCounter()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "upgradeTo(address)": FunctionFragment;
-    "upgradeToAndCall(address,bytes)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "COORDINATOR"
       | "DEFAULT_ADMIN_ROLE"
       | "_globalCounter"
       | "approve"
       | "balanceOf"
       | "baseURI"
       | "burn"
-      | "changeSigner"
+      | "fishByIds"
       | "getApproved"
       | "getRoleAdmin"
       | "grantRole"
       | "hasRole"
-      | "initialize"
       | "isApprovedForAll"
-      | "mint"
       | "name"
       | "ownerOf"
       | "paused"
-      | "proxiableUUID"
+      | "rawFulfillRandomWords"
       | "renounceRole"
+      | "requestIdToSender"
+      | "requestIdToTokenId"
       | "revokeRole"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
@@ -92,12 +93,16 @@ export interface FishNFTInterface extends utils.Interface {
       | "setPause"
       | "supportsInterface"
       | "symbol"
+      | "throwABait"
+      | "tokenCounter"
       | "tokenURI"
       | "transferFrom"
-      | "upgradeTo"
-      | "upgradeToAndCall"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "COORDINATOR",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
     values?: undefined
@@ -120,8 +125,8 @@ export interface FishNFTInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "changeSigner",
-    values: [PromiseOrValue<string>]
+    functionFragment: "fishByIds",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
@@ -140,20 +145,8 @@ export interface FishNFTInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -162,12 +155,20 @@ export interface FishNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "proxiableUUID",
-    values?: undefined
+    functionFragment: "rawFulfillRandomWords",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "requestIdToSender",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "requestIdToTokenId",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeRole",
@@ -208,6 +209,14 @@ export interface FishNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "throwABait",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenCounter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -219,15 +228,11 @@ export interface FishNFTInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "upgradeTo",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "upgradeToAndCall",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
 
+  decodeFunctionResult(
+    functionFragment: "COORDINATOR",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
     data: BytesLike
@@ -240,10 +245,7 @@ export interface FishNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "changeSigner",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "fishByIds", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -254,21 +256,27 @@ export interface FishNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "proxiableUUID",
+    functionFragment: "rawFulfillRandomWords",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "requestIdToSender",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "requestIdToTokenId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
@@ -291,58 +299,41 @@ export interface FishNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "throwABait", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenCounter",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "upgradeToAndCall",
-    data: BytesLike
-  ): Result;
 
   events: {
-    "AdminChanged(address,address)": EventFragment;
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "BeaconUpgraded(address)": EventFragment;
-    "Initialized(uint8)": EventFragment;
-    "Minted(uint256,uint256,address,address,uint256)": EventFragment;
+    "Fished(uint8,uint256,address)": EventFragment;
     "Paused(address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
-    "Upgraded(address)": EventFragment;
+    "throwBait(uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Fished"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "throwBait"): EventFragment;
 }
-
-export interface AdminChangedEventObject {
-  previousAdmin: string;
-  newAdmin: string;
-}
-export type AdminChangedEvent = TypedEvent<
-  [string, string],
-  AdminChangedEventObject
->;
-
-export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
 
 export interface ApprovalEventObject {
   owner: string;
@@ -368,36 +359,17 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface BeaconUpgradedEventObject {
-  beacon: string;
-}
-export type BeaconUpgradedEvent = TypedEvent<
-  [string],
-  BeaconUpgradedEventObject
->;
-
-export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
-
-export interface InitializedEventObject {
-  version: number;
-}
-export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
-
-export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export interface MintedEventObject {
-  _bikeType: BigNumber;
+export interface FishedEventObject {
+  fishType: number;
   _tokenId: BigNumber;
   _to: string;
-  payableT: string;
-  price: BigNumber;
 }
-export type MintedEvent = TypedEvent<
-  [BigNumber, BigNumber, string, string, BigNumber],
-  MintedEventObject
+export type FishedEvent = TypedEvent<
+  [number, BigNumber, string],
+  FishedEventObject
 >;
 
-export type MintedEventFilter = TypedEventFilter<MintedEvent>;
+export type FishedEventFilter = TypedEventFilter<FishedEvent>;
 
 export interface PausedEventObject {
   account: string;
@@ -462,12 +434,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface UpgradedEventObject {
-  implementation: string;
+export interface throwBaitEventObject {
+  requestID: BigNumber;
 }
-export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
+export type throwBaitEvent = TypedEvent<[BigNumber], throwBaitEventObject>;
 
-export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
+export type throwBaitEventFilter = TypedEventFilter<throwBaitEvent>;
 
 export interface FishNFT extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -496,6 +468,8 @@ export interface FishNFT extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    COORDINATOR(overrides?: CallOverrides): Promise<[string]>;
+
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     _globalCounter(
@@ -520,10 +494,10 @@ export interface FishNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    changeSigner(
-      newSigner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    fishByIds(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, number] & { weight: BigNumber; typeFish: number }>;
 
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -547,24 +521,11 @@ export interface FishNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _baseURII: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    mint(
-      to: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -575,13 +536,27 @@ export interface FishNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
+    rawFulfillRandomWords(
+      requestId: PromiseOrValue<BigNumberish>,
+      randomWords: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    requestIdToSender(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    requestIdToTokenId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
@@ -627,6 +602,12 @@ export interface FishNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
+    throwABait(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    tokenCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -638,18 +619,9 @@ export interface FishNFT extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
   };
+
+  COORDINATOR(overrides?: CallOverrides): Promise<string>;
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
@@ -673,10 +645,10 @@ export interface FishNFT extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  changeSigner(
-    newSigner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  fishByIds(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, number] & { weight: BigNumber; typeFish: number }>;
 
   getApproved(
     tokenId: PromiseOrValue<BigNumberish>,
@@ -700,24 +672,11 @@ export interface FishNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  initialize(
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    _baseURII: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   isApprovedForAll(
     owner: PromiseOrValue<string>,
     operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
-
-  mint(
-    to: PromiseOrValue<string>,
-    id: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -728,13 +687,27 @@ export interface FishNFT extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  proxiableUUID(overrides?: CallOverrides): Promise<string>;
+  rawFulfillRandomWords(
+    requestId: PromiseOrValue<BigNumberish>,
+    randomWords: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   renounceRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  requestIdToSender(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  requestIdToTokenId(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   revokeRole(
     role: PromiseOrValue<BytesLike>,
@@ -780,6 +753,12 @@ export interface FishNFT extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  throwABait(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  tokenCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
   tokenURI(
     tokenID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -792,18 +771,9 @@ export interface FishNFT extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  upgradeTo(
-    newImplementation: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  upgradeToAndCall(
-    newImplementation: PromiseOrValue<string>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
+    COORDINATOR(overrides?: CallOverrides): Promise<string>;
+
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
     _globalCounter(overrides?: CallOverrides): Promise<BigNumber>;
@@ -826,10 +796,10 @@ export interface FishNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    changeSigner(
-      newSigner: PromiseOrValue<string>,
+    fishByIds(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<[BigNumber, number] & { weight: BigNumber; typeFish: number }>;
 
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -853,24 +823,11 @@ export interface FishNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _baseURII: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    mint(
-      to: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -881,13 +838,27 @@ export interface FishNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<string>;
+    rawFulfillRandomWords(
+      requestId: PromiseOrValue<BigNumberish>,
+      randomWords: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    requestIdToSender(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    requestIdToTokenId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
@@ -933,6 +904,10 @@ export interface FishNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
+    throwABait(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokenCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -944,29 +919,9 @@ export interface FishNFT extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
-    "AdminChanged(address,address)"(
-      previousAdmin?: null,
-      newAdmin?: null
-    ): AdminChangedEventFilter;
-    AdminChanged(
-      previousAdmin?: null,
-      newAdmin?: null
-    ): AdminChangedEventFilter;
-
     "Approval(address,address,uint256)"(
       owner?: PromiseOrValue<string> | null,
       approved?: PromiseOrValue<string> | null,
@@ -989,30 +944,12 @@ export interface FishNFT extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
-    "BeaconUpgraded(address)"(
-      beacon?: PromiseOrValue<string> | null
-    ): BeaconUpgradedEventFilter;
-    BeaconUpgraded(
-      beacon?: PromiseOrValue<string> | null
-    ): BeaconUpgradedEventFilter;
-
-    "Initialized(uint8)"(version?: null): InitializedEventFilter;
-    Initialized(version?: null): InitializedEventFilter;
-
-    "Minted(uint256,uint256,address,address,uint256)"(
-      _bikeType?: null,
+    "Fished(uint8,uint256,address)"(
+      fishType?: null,
       _tokenId?: null,
-      _to?: null,
-      payableT?: null,
-      price?: null
-    ): MintedEventFilter;
-    Minted(
-      _bikeType?: null,
-      _tokenId?: null,
-      _to?: null,
-      payableT?: null,
-      price?: null
-    ): MintedEventFilter;
+      _to?: null
+    ): FishedEventFilter;
+    Fished(fishType?: null, _tokenId?: null, _to?: null): FishedEventFilter;
 
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -1064,15 +1001,13 @@ export interface FishNFT extends BaseContract {
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
-    "Upgraded(address)"(
-      implementation?: PromiseOrValue<string> | null
-    ): UpgradedEventFilter;
-    Upgraded(
-      implementation?: PromiseOrValue<string> | null
-    ): UpgradedEventFilter;
+    "throwBait(uint256)"(requestID?: null): throwBaitEventFilter;
+    throwBait(requestID?: null): throwBaitEventFilter;
   };
 
   estimateGas: {
+    COORDINATOR(overrides?: CallOverrides): Promise<BigNumber>;
+
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     _globalCounter(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1095,9 +1030,9 @@ export interface FishNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    changeSigner(
-      newSigner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    fishByIds(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getApproved(
@@ -1122,23 +1057,10 @@ export interface FishNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _baseURII: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mint(
-      to: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1150,12 +1072,26 @@ export interface FishNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
+    rawFulfillRandomWords(
+      requestId: PromiseOrValue<BigNumberish>,
+      randomWords: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    requestIdToSender(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    requestIdToTokenId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     revokeRole(
@@ -1202,6 +1138,12 @@ export interface FishNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    throwABait(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    tokenCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1213,20 +1155,11 @@ export interface FishNFT extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    COORDINATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     DEFAULT_ADMIN_ROLE(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1251,9 +1184,9 @@ export interface FishNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    changeSigner(
-      newSigner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    fishByIds(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getApproved(
@@ -1278,23 +1211,10 @@ export interface FishNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _baseURII: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    mint(
-      to: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1306,12 +1226,26 @@ export interface FishNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rawFulfillRandomWords(
+      requestId: PromiseOrValue<BigNumberish>,
+      randomWords: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    requestIdToSender(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    requestIdToTokenId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
@@ -1358,6 +1292,12 @@ export interface FishNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    throwABait(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    tokenCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1368,17 +1308,6 @@ export interface FishNFT extends BaseContract {
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

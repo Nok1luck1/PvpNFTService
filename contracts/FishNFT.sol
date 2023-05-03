@@ -1,32 +1,30 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.17;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721BurnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 
 contract FishNFT is
-    ERC721Upgradeable,
-    ERC721BurnableUpgradeable,
-    UUPSUpgradeable,
-    AccessControlUpgradeable,
-    PausableUpgradeable,
-    ReentrancyGuardUpgradeable,
+    ERC721,
+    ERC721Burnable,
+    AccessControl,
+    Pausable,
+    ReentrancyGuard,
     VRFConsumerBaseV2
 {
-    using StringsUpgradeable for uint256;
-    using CountersUpgradeable for CountersUpgradeable.Counter;
+    using Strings for uint256;
+    using Counters for Counters.Counter;
 
-    CountersUpgradeable.Counter public _globalCounter;
+    Counters.Counter public _globalCounter;
     enum FishTypes {
         Eel, //
         Skate, //
@@ -35,7 +33,8 @@ contract FishNFT is
         Perch, //
         Piranha, //
         Dolphine, //
-        Flounder //
+        Flounder, //
+        Laskir
     }
     struct FishInfo {
         uint weight;
@@ -60,27 +59,19 @@ contract FishNFT is
     event Fished(FishTypes fishType, uint256 _tokenId, address _to);
     event throwBait(uint requestID);
 
-    function initialize(
-        string calldata name_,
-        string calldata symbol_,
+    constructor(
+        string memory name_,
+        string memory symbol_,
         string memory _baseURII,
         uint64 _subscriptionId,
         address _VRFCoordinator,
         bytes32 _keyhash
-    ) public initializer {
-        __ERC721_init(name_, symbol_);
-        __AccessControl_init();
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    ) VRFConsumerBaseV2(_VRFCoordinator) ERC721(name_, symbol_) {
+        COORDINATOR = VRFCoordinatorV2Interface(_VRFCoordinator);
+        baseURI = _baseURII;
         callbackGasLimit = 300000;
         numWords = 2;
         requestConfirmations = 3;
-        __ReentrancyGuard_init();
-        __UUPSUpgradeable_init();
-        __Pausable_init();
-        VRFConsumerBaseV2(_VRFCoordinator);
-        COORDINATOR = VRFCoordinatorV2Interface(_VRFCoordinator);
-        baseURI = _baseURII;
     }
 
     receive() external payable {}
@@ -145,13 +136,13 @@ contract FishNFT is
             fishy.typeFish = FishTypes.Flounder;
             fishy.weight = _randomWords[1];
         } else if (_randomWords[0] % 1 == 0) {
-            fishy.typeFish = FishTypes.Anabas;
+            fishy.typeFish = FishTypes.Laskir;
             fishy.weight = _randomWords[1];
         }
         string memory link = string(
             bytes.concat(
                 bytes(baseURI),
-                bytes(StringsUpgradeable.toString(uint(fishy.typeFish)))
+                bytes(Strings.toString(uint(fishy.typeFish)))
             )
         );
         _safeMint(receiver, newItemId);
@@ -167,14 +158,5 @@ contract FishNFT is
 
     function supportsInterface(
         bytes4 interfaceId
-    )
-        public
-        view
-        override(ERC721Upgradeable, AccessControlUpgradeable)
-        returns (bool)
-    {}
-
-    function _authorizeUpgrade(
-        address newImplementation
-    ) internal override onlyRole(DEFAULT_ADMIN_ROLE) {}
+    ) public view override(ERC721, AccessControl) returns (bool) {}
 }
