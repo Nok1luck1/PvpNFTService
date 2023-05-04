@@ -1,0 +1,93 @@
+/* RESET */
+* {
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit; 
+}
+Link {
+  list-style: none;
+}
+/* KEYFRAMES */
+@keyframes ripple {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -50px -50px;
+  }
+}
+@keyframes wave {
+  
+}
+/* BASE STYLES */
+body {
+  background-color: black;
+  color: white; 
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Climate Crisis', cursive;
+}
+body::-webkit-scrollbar {
+  display: none; 
+}
+/* NAVBAR */ 
+.logo {
+  height: 40px;
+}
+.navbar {
+  position: fixed;
+  display: flex; 
+  align-items: center;
+  padding: 15px 20px; 
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 1000;
+
+}
+.nav-ul {
+  display: flex;
+}
+.nav-ul li {
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 26px;
+  color:rgb(20, 143, 20); 
+}
+.btn {
+  padding: 3px 10px; 
+  font-size: 17px;
+  width: 110px;
+  font-weight: 1000;
+  font-family: 'Climate Crisis', cursive;
+}
+/* FISHING */
+.fishing {
+  max-width: 1000px;
+  height: 500px;
+  margin: 0 auto; 
+  margin-top: 100px;
+  /* text-align: center; */
+  padding: 0 25px;
+}
+.lake {
+  position: relative;
+  width: 500px;
+  height: 300px;
+  /* border: 2px solid blue; */
+  /* border-radius: 50%; */
+  background: 
+    linear-gradient(to bottom, #0066ff 0%, #35c6ff 70%),
+    repeating-linear-gradient(to bottom, transparent 0,  10px, #000000 10px, #000000 20px);
+
+  /* animation-name: ripple;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out; */
+}
