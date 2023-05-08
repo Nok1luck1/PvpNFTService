@@ -15,15 +15,7 @@ Link {
   list-style: none;
 }
 /* KEYFRAMES */
-@keyframes ripple {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -50px -50px;
-  }
-}
-@keyframes wave {
+@keyframes riseUp {
   
 }
 /* BASE STYLES */
@@ -37,6 +29,10 @@ body {
 body::-webkit-scrollbar {
   display: none; 
 }
+.main {
+  display: flex;
+  text-align: center;
+}
 /* NAVBAR */ 
 .logo {
   height: 40px;
@@ -49,7 +45,6 @@ body::-webkit-scrollbar {
   justify-content: space-between;
   width: 100%;
   font-weight: 1000;
-
 }
 .nav-ul {
   display: flex;
@@ -61,11 +56,17 @@ body::-webkit-scrollbar {
   color:rgb(20, 143, 20); 
 }
 .btn {
-  padding: 3px 10px; 
-  font-size: 17px;
+  padding: 3px; 
+  font-size: 14px;
   width: 110px;
   font-weight: 1000;
   font-family: 'Climate Crisis', cursive;
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
+}
+.btn:hover {
+  transform: scale(1.05);
 }
 /* FISHING */
 .fishing {
@@ -73,21 +74,24 @@ body::-webkit-scrollbar {
   height: 500px;
   margin: 0 auto; 
   margin-top: 100px;
-  /* text-align: center; */
   padding: 0 25px;
+  display: flex; 
+  align-items: center;
 }
-.lake {
-  position: relative;
-  width: 500px;
-  height: 300px;
-  /* border: 2px solid blue; */
-  /* border-radius: 50%; */
-  background: 
-    linear-gradient(to bottom, #0066ff 0%, #35c6ff 70%),
-    repeating-linear-gradient(to bottom, transparent 0,  10px, #000000 10px, #000000 20px);
+.bridge {
+  position: absolute;
+  top: 280px; 
+  right: -20px; 
+}
+.hero {
+  position: absolute;
+  top: 130px; 
+  right: 130px;
+}
+.hero-animate {
+  position: absolute;
+  top: -145px; 
+  right: -180px;
+}
 
-  /* animation-name: ripple;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out; */
-}
+
