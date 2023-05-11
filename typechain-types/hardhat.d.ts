@@ -160,10 +160,6 @@ declare module "hardhat/types/runtime" {
       name: "FishNFT",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.FishNFT__factory>;
-    getContractFactory(
-      name: "Pvp",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Pvp__factory>;
 
     getContractAt(
       name: "VRFCoordinatorV2Interface",
@@ -350,11 +346,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.FishNFT>;
-    getContractAt(
-      name: "Pvp",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Pvp>;
 
     // default types
     getContractFactory(

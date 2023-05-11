@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { FishNFT } from "./FishNFT";
-export type { Pvp } from "./Pvp";

@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export { FishNFT__factory } from "./FishNFT__factory";
-export { Pvp__factory } from "./Pvp__factory";

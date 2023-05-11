@@ -1,54 +1,6 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\kolam\\OneDrive\\Рабочий стол\\PvpService\\contracts\\Pvp.sol": {
-      "lastModificationDate": 1683019957149,
-      "contentHash": "fcf0f807f4f554697cd524d721ca1e22",
-      "sourceName": "contracts/Pvp.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "viaIR": false,
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/token/ERC721/utils/ERC721HolderUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
-        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
-        "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
-      ],
-      "versionPragmas": [
-        "0.8.17"
-      ],
-      "artifacts": [
-        "Pvp"
-      ]
-    },
     "C:\\Users\\kolam\\OneDrive\\Рабочий стол\\PvpService\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol": {
       "lastModificationDate": 1683019935437,
       "contentHash": "1e9b13e33c8524e33d22f3f1239efe5c",
@@ -331,7 +283,7 @@
       "contentHash": "fe1190dbb6431c2464246925713f0f7f",
       "sourceName": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -908,7 +860,7 @@
       "contentHash": "396031251978f8febfd90cb62cb240ec",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -947,7 +899,7 @@
       "contentHash": "b9c58920ce74d6dc819161786112e7ee",
       "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1021,11 +973,11 @@
       ]
     },
     "C:\\Users\\kolam\\OneDrive\\Рабочий стол\\PvpService\\contracts\\FishNFT.sol": {
-      "lastModificationDate": 1683125663206,
-      "contentHash": "557d77d4af5820afb9d378941082a97d",
+      "lastModificationDate": 1683797960844,
+      "contentHash": "4c69f36a4fd43c1a839842fcb73c6e13",
       "sourceName": "contracts/FishNFT.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1050,10 +1002,10 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "@openzeppelin/contracts/utils/Strings.sol",
         "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
         "@openzeppelin/contracts/access/AccessControl.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
         "@openzeppelin/contracts/security/Pausable.sol",
@@ -1063,7 +1015,7 @@
         "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol"
       ],
       "versionPragmas": [
-        "0.8.17"
+        "0.8.19"
       ],
       "artifacts": [
         "FishNFT"
@@ -1317,7 +1269,7 @@
       "contentHash": "95a6c227d1b8843e9385518a5bce4853",
       "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1359,7 +1311,7 @@
       "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1396,7 +1348,7 @@
       "contentHash": "25c8108f36fdd472bc78d4c4af240c11",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1435,7 +1387,7 @@
       "contentHash": "a8e2d1c30042f64ed89c9d4157eb6cb9",
       "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1472,7 +1424,7 @@
       "contentHash": "f7f4f78c31f28534852e5c56000a25af",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1517,7 +1469,7 @@
       "contentHash": "eb9cc526ef59dfc4d644f56ddca0633a",
       "sourceName": "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1554,7 +1506,7 @@
       "contentHash": "8af32effd0536e2971ff8496812a5016",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1593,7 +1545,7 @@
       "contentHash": "5a341bfc4fe3ee5357ccdebd3a78ad2c",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1633,7 +1585,7 @@
       "contentHash": "8c9ed3426b676f67ee200a2bec96e224",
       "sourceName": "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1670,7 +1622,7 @@
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1707,7 +1659,7 @@
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1746,7 +1698,7 @@
       "contentHash": "57c84298234411cea19c7c284d86be8b",
       "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1783,7 +1735,7 @@
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1820,7 +1772,7 @@
       "contentHash": "f31ad6fc4bbf9c06203987220156a6ba",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1857,7 +1809,7 @@
       "contentHash": "eb7e61db29f31d88b3c1cef1b063d338",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1896,7 +1848,7 @@
       "contentHash": "c22d4395e33763de693fd440c6fd10e1",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {
@@ -1933,7 +1885,7 @@
       "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
-        "version": "0.8.17",
+        "version": "0.8.19",
         "settings": {
           "viaIR": false,
           "optimizer": {

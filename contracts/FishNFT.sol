@@ -1,10 +1,10 @@
 //SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.17;
+pragma solidity 0.8.19;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
@@ -57,21 +57,20 @@ contract FishNFT is
     mapping(uint => uint256) public requestIdToTokenId;
 
     event Fished(FishTypes fishType, uint256 _tokenId, address _to);
+    event Minted(address receiver, uint fishID);
     event throwBait(uint requestID);
 
     constructor(
-        string memory name_,
-        string memory symbol_,
-        string memory _baseURII,
         uint64 _subscriptionId,
         address _VRFCoordinator,
         bytes32 _keyhash
-    ) VRFConsumerBaseV2(_VRFCoordinator) ERC721(name_, symbol_) {
+    ) VRFConsumerBaseV2(_VRFCoordinator) ERC721("ZXalupa", "ZLP") {
         COORDINATOR = VRFCoordinatorV2Interface(_VRFCoordinator);
-        baseURI = _baseURII;
+        baseURI = "Https.192.168.01.01/";
         callbackGasLimit = 300000;
         numWords = 2;
         requestConfirmations = 3;
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     receive() external payable {}
@@ -150,11 +149,26 @@ contract FishNFT is
         emit Fished(fishy.typeFish, requestId, receiver);
     }
 
+    function mint(address to, uint typeF) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _globalCounter.increment();
+        uint256 newItemId = _globalCounter.current();
+        string memory link = string(
+            bytes.concat(bytes(baseURI), bytes(Strings.toString(typeF)))
+        );
+        _safeMint(to, newItemId);
+        _tokenURIs[_globalCounter.current()] = link;
+        emit Minted(to, newItemId);
+    }
+
     function setPause(
         bool _newPauseState
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _newPauseState ? _pause() : _unpause();
     }
+
+    function emergencyWithdraw(
+        address too
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {}
 
     function supportsInterface(
         bytes4 interfaceId

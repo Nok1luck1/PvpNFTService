@@ -82,5 +82,3 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { FishNFT } from "./contracts/FishNFT";
 export { FishNFT__factory } from "./factories/contracts/FishNFT__factory";
-export type { Pvp } from "./contracts/Pvp";
-export { Pvp__factory } from "./factories/contracts/Pvp__factory";

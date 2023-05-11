@@ -36,12 +36,14 @@ export interface FishNFTInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "baseURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "emergencyWithdraw(address)": FunctionFragment;
     "fishByIds(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "paused()": FunctionFragment;
@@ -72,12 +74,14 @@ export interface FishNFTInterface extends utils.Interface {
       | "balanceOf"
       | "baseURI"
       | "burn"
+      | "emergencyWithdraw"
       | "fishByIds"
       | "getApproved"
       | "getRoleAdmin"
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
+      | "mint"
       | "name"
       | "ownerOf"
       | "paused"
@@ -125,6 +129,10 @@ export interface FishNFTInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "emergencyWithdraw",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "fishByIds",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -147,6 +155,10 @@ export interface FishNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -245,6 +257,10 @@ export interface FishNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "emergencyWithdraw",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "fishByIds", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
@@ -260,6 +276,7 @@ export interface FishNFTInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
@@ -314,6 +331,7 @@ export interface FishNFTInterface extends utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "Fished(uint8,uint256,address)": EventFragment;
+    "Minted(address,uint256)": EventFragment;
     "Paused(address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
@@ -326,6 +344,7 @@ export interface FishNFTInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Fished"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
@@ -370,6 +389,14 @@ export type FishedEvent = TypedEvent<
 >;
 
 export type FishedEventFilter = TypedEventFilter<FishedEvent>;
+
+export interface MintedEventObject {
+  receiver: string;
+  fishID: BigNumber;
+}
+export type MintedEvent = TypedEvent<[string, BigNumber], MintedEventObject>;
+
+export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
 export interface PausedEventObject {
   account: string;
@@ -494,6 +521,11 @@ export interface FishNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    emergencyWithdraw(
+      too: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     fishByIds(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -526,6 +558,12 @@ export interface FishNFT extends BaseContract {
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    mint(
+      to: PromiseOrValue<string>,
+      typeF: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -645,6 +683,11 @@ export interface FishNFT extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  emergencyWithdraw(
+    too: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   fishByIds(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -677,6 +720,12 @@ export interface FishNFT extends BaseContract {
     operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  mint(
+    to: PromiseOrValue<string>,
+    typeF: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -796,6 +845,11 @@ export interface FishNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    emergencyWithdraw(
+      too: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     fishByIds(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -828,6 +882,12 @@ export interface FishNFT extends BaseContract {
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    mint(
+      to: PromiseOrValue<string>,
+      typeF: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -951,6 +1011,12 @@ export interface FishNFT extends BaseContract {
     ): FishedEventFilter;
     Fished(fishType?: null, _tokenId?: null, _to?: null): FishedEventFilter;
 
+    "Minted(address,uint256)"(
+      receiver?: null,
+      fishID?: null
+    ): MintedEventFilter;
+    Minted(receiver?: null, fishID?: null): MintedEventFilter;
+
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
@@ -1030,6 +1096,11 @@ export interface FishNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    emergencyWithdraw(
+      too: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     fishByIds(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1061,6 +1132,12 @@ export interface FishNFT extends BaseContract {
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    mint(
+      to: PromiseOrValue<string>,
+      typeF: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1184,6 +1261,11 @@ export interface FishNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    emergencyWithdraw(
+      too: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     fishByIds(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1215,6 +1297,12 @@ export interface FishNFT extends BaseContract {
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    mint(
+      to: PromiseOrValue<string>,
+      typeF: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
