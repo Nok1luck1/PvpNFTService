@@ -77,6 +77,12 @@ module.exports = {
       gasPrice: 5000000000,
       accounts: [PRIVATE_KEY],
     },
+    sepolia: {
+      url: "https://sepolia.infura.io/v3/dd62ce7250a1497691073a36067363a8",
+      chainId: 11155111,
+      //gasPrice: 5000000000,
+      accounts: [PRIVATE_KEY],
+    },
     bscTestnet: {
       url: "https://data-seed-prebsc-1-s3.binance.org:8545/",
       chainId: 97,
@@ -153,6 +159,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       ropsten: "H976DUPQP2KFCFB84ZTTC2GW6RHIHEEWRK",
+      sepolia: "H976DUPQP2KFCFB84ZTTC2GW6RHIHEEWRK",
       mainnet: "H976DUPQP2KFCFB84ZTTC2GW6RHIHEEWRK",
       rinkeby: "H976DUPQP2KFCFB84ZTTC2GW6RHIHEEWRK",
       goerli: "H976DUPQP2KFCFB84ZTTC2GW6RHIHEEWRK",

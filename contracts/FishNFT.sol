@@ -41,7 +41,6 @@ contract FishNFT is
         FishTypes typeFish;
     }
     uint16 requestConfirmations;
-    address private signer;
     bytes32 internal keyHash;
     uint32 callbackGasLimit;
     uint32 numWords;
@@ -52,8 +51,9 @@ contract FishNFT is
     string public baseURI;
 
     mapping(uint => address) public requestIdToSender;
-    mapping(uint => FishInfo) public fishByIds;
+
     mapping(uint256 => string) private _tokenURIs;
+    mapping(uint => FishInfo) public fishByIds;
     mapping(uint => uint256) public requestIdToTokenId;
 
     event Fished(FishTypes fishType, uint256 _tokenId, address _to);
@@ -70,12 +70,25 @@ contract FishNFT is
         callbackGasLimit = 300000;
         numWords = 2;
         requestConfirmations = 3;
+        s_subscriptionId = _subscriptionId;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     receive() external payable {}
 
     fallback() external payable {}
+
+    function setNewSubcription(
+        uint64 newsubcription
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        s_subscriptionId = newsubcription;
+    }
+
+    function newKeyHash(
+        bytes32 newkeyHash
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        keyHash = newkeyHash;
+    }
 
     function tokenURI(
         uint tokenID

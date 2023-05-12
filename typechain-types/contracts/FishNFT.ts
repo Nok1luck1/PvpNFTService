@@ -45,6 +45,7 @@ export interface FishNFTInterface extends utils.Interface {
     "isApprovedForAll(address,address)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
+    "newKeyHash(bytes32)": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "paused()": FunctionFragment;
     "rawFulfillRandomWords(uint256,uint256[])": FunctionFragment;
@@ -56,6 +57,7 @@ export interface FishNFTInterface extends utils.Interface {
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseURI(string)": FunctionFragment;
+    "setNewSubcription(uint64)": FunctionFragment;
     "setPause(bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
@@ -83,6 +85,7 @@ export interface FishNFTInterface extends utils.Interface {
       | "isApprovedForAll"
       | "mint"
       | "name"
+      | "newKeyHash"
       | "ownerOf"
       | "paused"
       | "rawFulfillRandomWords"
@@ -94,6 +97,7 @@ export interface FishNFTInterface extends utils.Interface {
       | "safeTransferFrom(address,address,uint256,bytes)"
       | "setApprovalForAll"
       | "setBaseURI"
+      | "setNewSubcription"
       | "setPause"
       | "supportsInterface"
       | "symbol"
@@ -162,6 +166,10 @@ export interface FishNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "newKeyHash",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -210,6 +218,10 @@ export interface FishNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setBaseURI",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setNewSubcription",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setPause",
@@ -278,6 +290,7 @@ export interface FishNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "newKeyHash", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
@@ -310,6 +323,10 @@ export interface FishNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setBaseURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setNewSubcription",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "setPause", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
@@ -567,6 +584,11 @@ export interface FishNFT extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
+    newKeyHash(
+      newkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -625,6 +647,11 @@ export interface FishNFT extends BaseContract {
 
     setBaseURI(
       newBaseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setNewSubcription(
+      newsubcription: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -729,6 +756,11 @@ export interface FishNFT extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
+  newKeyHash(
+    newkeyHash: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   ownerOf(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -787,6 +819,11 @@ export interface FishNFT extends BaseContract {
 
   setBaseURI(
     newBaseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setNewSubcription(
+    newsubcription: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -891,6 +928,11 @@ export interface FishNFT extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
+    newKeyHash(
+      newkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -949,6 +991,11 @@ export interface FishNFT extends BaseContract {
 
     setBaseURI(
       newBaseURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setNewSubcription(
+      newsubcription: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1142,6 +1189,11 @@ export interface FishNFT extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
+    newKeyHash(
+      newkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1200,6 +1252,11 @@ export interface FishNFT extends BaseContract {
 
     setBaseURI(
       newBaseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setNewSubcription(
+      newsubcription: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1307,6 +1364,11 @@ export interface FishNFT extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    newKeyHash(
+      newkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1365,6 +1427,11 @@ export interface FishNFT extends BaseContract {
 
     setBaseURI(
       newBaseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setNewSubcription(
+      newsubcription: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
