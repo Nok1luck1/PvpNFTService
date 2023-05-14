@@ -3,3 +3,5 @@ node_modules
 .env
 /fishing/node_modules/
 ./fishing/build/
+hardhat.config.ts
+typechain-types
