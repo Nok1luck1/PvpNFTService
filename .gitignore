@@ -4,4 +4,4 @@ node_modules
 /fishing/node_modules/
 ./fishing/build/
 hardhat.config.ts
-typechain-types
+/typechain-types
