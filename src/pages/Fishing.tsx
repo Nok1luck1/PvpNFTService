@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import MyNavbar from "../components/MyNavbar";
-import styled, { keyframes, css } from "styled-components";
+import styled from "styled-components";
 import { getContract } from "../components/PETR";
-import abi from "../components/abi";
 
 interface LakeProps {
   width?: number;
   height?: number;
-}
-
-interface RodProps {
-  isAnimationPlaying?: boolean;
 }
 
 const LAKE_WIDTH = 900;
@@ -18,6 +13,7 @@ const LAKE_HEIGHT = 600;
 
 export default function FishingEl() {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<null | string>(null);
 
   const handleClick = async () => {
     try {
@@ -30,8 +26,11 @@ export default function FishingEl() {
       if (tx) {
         setIsAnimationPlaying(!isAnimationPlaying);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err) setErrorMsg((err as Error).message);
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 9000);
     }
   };
 
@@ -39,13 +38,13 @@ export default function FishingEl() {
     <>
       <MyNavbar />
       FISHING PAGE
+      {errorMsg && <p className="error">Error: {errorMsg}</p>}
       <main className="main">
         <Fishing>
           <Lake width={LAKE_WIDTH} height={LAKE_HEIGHT}>
             <button className="btn" onClick={handleClick}>
               {isAnimationPlaying ? "pause" : "start"}
             </button>
-            {/* <Rod isAnimationPlaying={isAnimationPlaying} /> */}
             <svg
               className="bridge"
               width="267"
@@ -103,6 +102,7 @@ export default function FishingEl() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
+                  id="sitting-man"
                   d="M296.15 211L302.236 147.117C302.334 146.091 303.196 145.307 304.227 145.307H347C348.105 145.307 349 144.411 349 143.307V70M349 70L290 97.8571M349 70L314.205 106.712"
                   stroke="black"
                   stroke-width="5"
@@ -133,7 +133,7 @@ const Fishing = styled.div`
   max-width: 1000px;
   height: 500px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 200px;
   padding: 0 25px;
   display: flex;
   align-items: center;
@@ -148,39 +148,4 @@ const Lake = styled.div<LakeProps>`
     rgb(72, 106, 255) 65%,
     rgb(23, 77, 255) 35%
   );
-`;
-
-const leanAnimation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(35deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-`;
-
-const Rod = styled.div<RodProps>`
-  position: absolute;
-  top: 260px;
-  left: 300px;
-  height: 4px;
-  width: 150px;
-  transform: rotate(35deg);
-  border-radius: 30px 0px 0px 30px;
-  background-color: black;
-  animation-name: ${({ isAnimationPlaying }) =>
-    isAnimationPlaying ? leanAnimation : "none"};
-  ${({ isAnimationPlaying }) =>
-    isAnimationPlaying &&
-    css`
-      animation-name: ${leanAnimation};
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: infinite;
-      transform-origin: top right;
-      animation-play-state: running;
-    `}
 `;

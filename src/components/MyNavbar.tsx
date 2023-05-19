@@ -6,6 +6,7 @@ import logo from "../images/fish-logo.png";
 export default function MyNavbar() {
   const { account, activateBrowserWallet, deactivate } = useEthers();
   const isConnected = account !== undefined;
+
   return (
     <>
       <nav className="navbar">
@@ -16,11 +17,22 @@ export default function MyNavbar() {
           <Link to="/Fishing">
             <li>fishing</li>
           </Link>
-          <Link to="/Fish">
-            <li>fish</li>
-          </Link>
-          <Link to="/Equipment">
+          <li>
+            fish&#9662;
+            <ul>
+              <Link to="/FishInfo">
+                <li>fishInfo</li>
+              </Link>
+              <Link to="/MyFish">
+                <li>myFish</li>
+              </Link>
+            </ul>
+          </li>
+          <Link to="/MyEquipment">
             <li>equipment</li>
+          </Link>
+          <Link to="/Store">
+            <li>store</li>
           </Link>
         </ul>
         {isConnected ? (
