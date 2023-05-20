@@ -37,7 +37,6 @@ export default function FishingEl() {
   return (
     <>
       <MyNavbar />
-      FISHING PAGE
       {errorMsg && <p className="error">Error: {errorMsg}</p>}
       <main className="main">
         <Fishing>

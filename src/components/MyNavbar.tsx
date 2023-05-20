@@ -28,12 +28,17 @@ export default function MyNavbar() {
               </Link>
             </ul>
           </li>
-          <Link to="/MyEquipment">
-            <li>equipment</li>
-          </Link>
-          <Link to="/Store">
-            <li>store</li>
-          </Link>
+          <li>
+            equipment&#9662;
+            <ul>
+              <Link to="/MyEquipment">
+                <li>myEquipment</li>
+              </Link>
+              <Link to="/Store">
+                <li>store</li>
+              </Link>
+            </ul>
+          </li>
         </ul>
         {isConnected ? (
           <button className="btn" onClick={deactivate}>

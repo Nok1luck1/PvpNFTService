@@ -5,6 +5,12 @@ export default function Fish() {
   return (
     <>
       <MyNavbar />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      MY FISH PAGE
     </>
   );
 }

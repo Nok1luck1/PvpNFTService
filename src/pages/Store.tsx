@@ -7,9 +7,8 @@ export default function Store() {
   return (
     <>
       <MyNavbar />
-      STORE PAGE
       <div className="store">
-        HELLO
+        STORE PAGE
         <video width="320" height="240" controls>
           <source src={video} type="video/mp4" />
         </video>

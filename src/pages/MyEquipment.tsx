@@ -11,7 +11,6 @@ export default function MyEquipment(props: any) {
   return (
     <>
       <MyNavbar />
-      MY EQUIPMENT PAGE
       <div className="box">
         <div className="section">
           <h1 className="name">Default</h1>
