@@ -18,6 +18,8 @@ dotenv = "0.15.0"
 secp256k1 = "0.20.3"
 hex-literal = "0.3"
 axum = "0.6"
+tower-http = { version = "0.4", features = ["fs"] }
+tower-cookies = "0.9"
 [dev-dependencies]
 anyhow = "1"
 httpc-test = "0.1.1"
