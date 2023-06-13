@@ -1,0 +1,23 @@
+---
+compiled_package_info:
+  package_name: sui_test
+  address_alias_instantiation:
+    std: "0000000000000000000000000000000000000000000000000000000000000001"
+    sui: "0000000000000000000000000000000000000000000000000000000000000002"
+    sui_test: "0000000000000000000000000000000000000000000000000000000000000000"
+  source_digest: 4238A096A74AEE066AF1DA24A5076D9D9A729718AEB8D11F40F9C83650B0D07E
+  build_flags:
+    dev_mode: false
+    test_mode: false
+    generate_docs: false
+    generate_abis: false
+    install_dir: ~
+    force_recompilation: false
+    lock_file: "./Move.lock"
+    additional_named_addresses: {}
+    architecture: ~
+    fetch_deps_only: false
+    skip_fetch_latest_git_deps: false
+dependencies:
+  - MoveStdlib
+  - Sui
