@@ -34,23 +34,26 @@ module sui_test::FishNFT {
         receiver: address,
         typeNFT: string::String,
     }
+    struct RandomValue has drop{
+        name:vector<u8>,
+        url:vector<u8>
+    }
     
 
     /// Create a new devnet_nft
     public entry fun mint(
         name: vector<u8>,
         description: vector<u8>,
-        url: vector<u8>,
         ctx: &mut TxContext
     ) {
         let number: u64 = generateNumber();
-        let typeGen = typeForNumber(number);
+        let (type,url) = typeForNumber(number);
         let nft = FishNFT {
             id: object::new(ctx),
             name: string::utf8(name),
             description: string::utf8(description),
             url: url::new_unsafe_from_bytes(url),
-            token_type: string::utf8(typeGen),
+            token_type: string::utf8(type),
             weigtht: (number as u16),
         };
         //let sender = tx_context::sender(ctx);
@@ -66,42 +69,50 @@ module sui_test::FishNFT {
         let numberGiv = (1103512332 + 12345) % (2 ^ 31);
         numberGiv
     }
-    fun typeForNumber(number:u64): vector<u8>{
+    fun typeForNumber(number:u64): (vector<u8>,vector<u8>){
        if (number % 9 ==0){
         let type:vector<u8> = b"Eel";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/0.jpg";
+        (type,url)
        } else if (number % 8 ==0) {
         let type:vector<u8> = b"Skate";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/1.jpg";
+        (type,url)
        }
        else if (number % 7 ==0) {
         let type:vector<u8> = b"Anabas";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/2.jpg";
+        (type,url)
        }
        else if (number % 6 ==0) {
         let type:vector<u8> = b"Shark";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/3.jpg";
+        (type,url)
        }
        else if (number % 5 ==0) {
         let type:vector<u8> = b"Perch";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/4.jpg";
+       (type,url)
        }
        else if (number % 4 ==0) {
         let type:vector<u8> = b"Piranha";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/5.jpg";
+        (type,url)
        }
        else if (number % 3 ==0) {
         let type:vector<u8> = b"Dolphine";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/6.jpg";
+       (type,url)
        }
        else if (number % 3 ==0) {
         let type:vector<u8> = b"Flounder";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/7.jpg";
+        (type,url)
        }else {
         let type:vector<u8> = b"Laskir";
-        type
+        let url:vector<u8> = b"https://bafybeihvdqo4h52ckg2u55tjz3tthbirpntfjw2smjspqmjt5iel4af5za.ipfs.nftstorage.link/8.jpg";
+        (type,url)
        }
-        
     }
 
    
