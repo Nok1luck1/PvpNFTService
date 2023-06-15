@@ -1,0 +1,23 @@
+---
+compiled_package_info:
+  package_name: move_contract
+  address_alias_instantiation:
+    std: "0000000000000000000000000000000000000000000000000000000000000001"
+    sui: "0000000000000000000000000000000000000000000000000000000000000002"
+    token: "0000000000000000000000000000000000000000000000000000000000000000"
+  source_digest: 37390681540237F8ED1E9E2D8DDAD9A2F98FC35BFB390C70187D3AA787F1B096
+  build_flags:
+    dev_mode: false
+    test_mode: false
+    generate_docs: false
+    generate_abis: false
+    install_dir: ~
+    force_recompilation: false
+    lock_file: "./Move.lock"
+    additional_named_addresses: {}
+    architecture: ~
+    fetch_deps_only: false
+    skip_fetch_latest_git_deps: false
+dependencies:
+  - MoveStdlib
+  - Sui
