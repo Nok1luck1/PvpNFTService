@@ -10,12 +10,14 @@ module fishnft::FishNFT {
 
     /// Capability that grants an owner the right to collect profits.
     struct Owner has key { id: UID }
+    
 
     /// An example NFT that can be minted by anybody
     struct FishNFT has key, store {
         id: UID,
         /// Name for the token
         name: string::String,
+
         /// Description of the token
         description: string::String,
         /// URL for the token
@@ -38,10 +40,10 @@ module fishnft::FishNFT {
         receiver: address,
         typeNFT: string::String,
     }
-    struct RandomValue has drop{
-        name:vector<u8>,
-        url:vector<u8>
+    struct Counter{
+        currentCounter:u64
     }
+
     
 
     /// Create a new devnet_nft
@@ -50,6 +52,9 @@ module fishnft::FishNFT {
         description: vector<u8>,
         ctx: &mut TxContext
     ) {
+        let counter = getCounter();
+        counter.currentCounter +=1;
+        setCounter(counter)    
         let number: u64 = generateNumber();
         let (type,url) = typeForNumber(number);
         let nft = FishNFT {
@@ -60,6 +65,7 @@ module fishnft::FishNFT {
             token_type: string::utf8(type),
             weigtht: (number as u16),
         };
+
         //let sender = tx_context::sender(ctx);
         event::emit(MintNFTEvent {
             object_id: object::uid_to_inner(&nft.id),
@@ -118,6 +124,11 @@ module fishnft::FishNFT {
         (type,url)
        }
     }
+     /// Read a FishNFT instance by key
+    public fun getFishNFTByKey(key: UID): &FishNFT {
+        let nft: &FishNFT = object::get(key);
+        nft
+    }
 
    
     /// Update the `description` of `nft` to `new_description`
@@ -152,6 +163,18 @@ module fishnft::FishNFT {
     /// Get the NFT's `url`
     public fun getUrl(nft: &FishNFT): &Url {
         &nft.url
+    }
+    ///internal counter for displaing how much nfts get minted 
+    public fun getCounter(): Counter {
+        if let Some(counter) = object::get(UID("counter")) {
+            counter
+        } else {
+            Counter { count: 0 }
+        }
+    }
+    /// Set the value of the counter
+    fun setCounter(counter: Counter) {
+        object::set(UID("counter"), counter);
     }
 
    public entry fun transfer(
