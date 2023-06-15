@@ -5,15 +5,15 @@ compiled_package_info:
     fishnft: "0000000000000000000000000000000000000000000000000000000000000000"
     std: "0000000000000000000000000000000000000000000000000000000000000001"
     sui: "0000000000000000000000000000000000000000000000000000000000000002"
-  source_digest: 8EEE9A2FAF2EB1FE315CD14E7F9D75E7CB58B33104A8E702A4F70AD7774AC410
+  source_digest: 311EB21FF57E13D0B0C6E86ACA3AA7F6092074DB752342B2E04D099450B25DC9
   build_flags:
-    dev_mode: false
-    test_mode: false
+    dev_mode: true
+    test_mode: true
     generate_docs: false
     generate_abis: false
     install_dir: ~
     force_recompilation: false
-    lock_file: "./Move.lock"
+    lock_file: ~
     additional_named_addresses: {}
     architecture: ~
     fetch_deps_only: false

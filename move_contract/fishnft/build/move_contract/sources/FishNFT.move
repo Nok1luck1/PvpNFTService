@@ -3,21 +3,20 @@ module fishnft::FishNFT {
     use std::string;
     use sui::object::{Self, ID, UID};
     use sui::event;
-    use sui::clock::{Self, Clock};
+    //use sui::clock::{Self, Clock};
     use sui::transfer;
     use sui::tx_context::{Self, TxContext};
 
 
     /// Capability that grants an owner the right to collect profits.
     struct Owner has key { id: UID }
+    
 
     /// An example NFT that can be minted by anybody
     struct FishNFT has key, store {
         id: UID,
         /// Name for the token
         name: string::String,
-        /// Description of the token
-        description: string::String,
         /// URL for the token
         url: Url,
         // TODO: allow custom attributes
@@ -38,28 +37,29 @@ module fishnft::FishNFT {
         receiver: address,
         typeNFT: string::String,
     }
-    struct RandomValue has drop{
-        name:vector<u8>,
-        url:vector<u8>
+    struct Counter{
+        currentCounter:u64
     }
+
     
 
     /// Create a new devnet_nft
     public entry fun mint(
         name: vector<u8>,
-        description: vector<u8>,
+        magicNumber:u64,
         ctx: &mut TxContext
     ) {
+          
         let number: u64 = generateNumber();
-        let (type,url) = typeForNumber(number);
+        let (type,url) = typeForNumber(number + magicNumber);
         let nft = FishNFT {
             id: object::new(ctx),
             name: string::utf8(name),
-            description: string::utf8(description),
             url: url::new_unsafe_from_bytes(url),
             token_type: string::utf8(type),
             weigtht: (number as u16),
         };
+
         //let sender = tx_context::sender(ctx);
         event::emit(MintNFTEvent {
             object_id: object::uid_to_inner(&nft.id),
@@ -118,19 +118,14 @@ module fishnft::FishNFT {
         (type,url)
        }
     }
-
-   
-    /// Update the `description` of `nft` to `new_description`
-    public entry fun update_description(
-        nft: &mut FishNFT,
-        new_description: vector<u8>,
-    ) {
-        nft.description = string::utf8(new_description);
-    }
+     /// Read a FishNFT instance by key
+    // public fun getFishNFTByKey(key: UID): &FishNFT {
+    //     &borrow_global<FishNFT>(key)
+    // }
 
     /// Permanently delete `nft`
     public entry fun burn(nft: FishNFT) {
-        let FishNFT { id, name: _, description: _, url: _, token_type: _,weigtht:_ } = nft;
+        let FishNFT { id, name: _,  url: _, token_type: _,weigtht:_ } = nft;
         object::delete(id);
     }
 
@@ -144,15 +139,12 @@ module fishnft::FishNFT {
         &nft.token_type
     }
 
-    /// Get the NFT's `description`
-    public fun getDescription(nft: &FishNFT): &string::String {
-        &nft.description
-    }
 
     /// Get the NFT's `url`
     public fun getUrl(nft: &FishNFT): &Url {
         &nft.url
     }
+    
 
    public entry fun transfer(
     nft: FishNFT,
@@ -167,6 +159,44 @@ module fishnft::FishNFT {
     transfer::public_transfer(nft, recipient);
 }
 
+}
+#[test_only]
+module fishnft::FishNFTTest{
+    use fishnft::FishNFT::{Self,FishNFT};
+    use sui::test_scenario as ts;
+    use sui::transfer;
+    use std::debug;
+
+    #[test]
+    fun mint_transfer(){
+        let addr1 = @0xA;
+        let addr2 = @0xB;
+        let scenario = ts::begin(addr1);
+        let scenario2 = ts::begin(addr2);
+        {
+            FishNFT::mint(b"Zalupa2",123, ts::ctx(&mut scenario2))
+        };
+        {
+            FishNFT::mint(b"Zalupa" ,23523, ts::ctx(&mut scenario))
+        };
+        ts::next_tx(&mut scenario,addr1);
+        {   
+            let nft = ts::take_from_sender<FishNFT>(&mut scenario);
+            debug::print(&nft);
+            transfer::public_transfer(nft,addr2);
+            
+        };
+        ts::next_tx(&mut scenario2,addr2);
+        {   
+            let nft1 = ts::take_from_sender<FishNFT>(&mut scenario2);
+            debug::print(&nft1);
+            transfer::public_transfer(nft1,addr1);
+            
+        };
+        
+        ts::end(scenario);
+        ts::end(scenario2);
+    }
 }
 
 
