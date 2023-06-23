@@ -5,15 +5,15 @@ compiled_package_info:
     std: "0000000000000000000000000000000000000000000000000000000000000001"
     sui: "0000000000000000000000000000000000000000000000000000000000000002"
     token: "0000000000000000000000000000000000000000000000000000000000000000"
-  source_digest: 37390681540237F8ED1E9E2D8DDAD9A2F98FC35BFB390C70187D3AA787F1B096
+  source_digest: BC7A4B02B4545A8EE04F47C8E57B915AD1843764787540F3B9BDE1A05CDF973E
   build_flags:
-    dev_mode: false
-    test_mode: false
+    dev_mode: true
+    test_mode: true
     generate_docs: false
     generate_abis: false
     install_dir: ~
     force_recompilation: false
-    lock_file: "./Move.lock"
+    lock_file: ~
     additional_named_addresses: {}
     architecture: ~
     fetch_deps_only: false
